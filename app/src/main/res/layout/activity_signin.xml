@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context=".SigninActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/default_padding">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="Login"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/text"
+                android:textSize="@dimen/default_text_header"
+                android:textStyle="bold"
+                android:gravity="center_horizontal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/default_padding">
+
+                <EditText
+                    android:id="@+id/signin_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:background="@drawable/blue_border"
+                    android:drawableLeft="@drawable/baseline_account_circle_24"
+                    android:drawablePadding="@dimen/default_padding"
+                    android:hint="Username"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_text"
+                    android:padding="@dimen/default_padding" />
+
+                <EditText
+                    android:id="@+id/signin_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:background="@drawable/blue_border"
+                    android:drawableLeft="@drawable/baseline_lock_24"
+                    android:drawablePadding="@dimen/default_padding"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_text"
+                    android:padding="@dimen/default_padding" />
+
+                <Button
+                    android:id="@+id/signin_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:background="@color/text"
+                    android:text="Login"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/default_text_size" />
+
+                <TextView
+                    android:id="@+id/signinredirecttext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:padding="@dimen/default_padding"
+                    android:text="You are new? Sign up"
+                    android:textColor="@color/text"
+                    android:textSize="@dimen/default_text_size" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
