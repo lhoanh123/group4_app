@@ -4,7 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#AAC4FF</color>
     <color name="navy">#004aad</color>
-    <color name="background">#F9E3FF</color>
-    <color name="text">#F23694</color>
+    <color name="background">#FFF0FB</color>
+    <color name="text">#AE366A</color>
     <color name="hint_text">@android:color/darker_gray</color>
 </resources>
