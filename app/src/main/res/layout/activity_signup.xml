@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
-            android:text="Sign Up"
+            android:text="@string/sign_up"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/text"
@@ -33,17 +33,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/default_padding">
+            android:padding="@dimen/default_padding"
+            android:gravity="center">
 
             <EditText
                 android:id="@+id/signup_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:background="@drawable/blue_border"
-                android:drawableLeft="@drawable/baseline_account_circle_24"
+                android:background="@drawable/border"
+                android:drawableStart="@drawable/baseline_account_circle_24"
                 android:drawablePadding="@dimen/default_padding"
-                android:hint="Username"
+                android:hint="@string/username"
                 android:padding="@dimen/default_padding"
                 android:textColor="@color/black"
                 android:textColorHint="@color/hint_text"
@@ -54,8 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:background="@drawable/blue_border"
-                android:drawableLeft="@drawable/baseline_email_24"
+                android:background="@drawable/border"
+                android:drawableStart="@drawable/baseline_email_24"
                 android:drawablePadding="@dimen/default_padding"
                 android:hint="Email"
                 android:padding="@dimen/default_padding"
@@ -68,10 +69,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:background="@drawable/blue_border"
-                android:drawableLeft="@drawable/baseline_lock_24"
+                android:background="@drawable/border"
+                android:drawableStart="@drawable/baseline_lock_24"
                 android:drawablePadding="@dimen/default_padding"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:padding="@dimen/default_padding"
                 android:textColor="@color/black"
@@ -83,8 +84,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:background="@drawable/blue_border"
-                android:drawableLeft="@drawable/baseline_password_24"
+                android:background="@drawable/border"
+                android:drawableStart="@drawable/baseline_password_24"
                 android:drawablePadding="@dimen/default_padding"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
@@ -95,12 +96,12 @@
 
             <Button
                 android:id="@+id/signup_button"
-                android:background="@color/text"
+                android:background="@drawable/button"
                 android:textColor="@color/white"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/default_button_size"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
-                android:text="Sign up"
+                android:text="@string/sign_up"
                 android:textSize="@dimen/default_text_size" />
 
             <TextView
@@ -111,7 +112,7 @@
                 android:padding="@dimen/default_padding"
                 android:text="Already a user? Sign in"
                 android:textSize="@dimen/default_text_size"
-                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_redirect_text"
                 android:textColor="@color/text" />
 
         </LinearLayout>
