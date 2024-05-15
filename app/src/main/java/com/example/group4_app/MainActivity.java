@@ -23,9 +23,6 @@ public class MainActivity extends AppCompatActivity {
         // Đặt layout cho activity
         setContentView(R.layout.activity_main);
 
-        // Tạo kết nối đến cơ sở dữ liệu SQLite
-        SQLiteConnector databaseConnector = new SQLiteConnector(this);
-
         // Inflate layout của navigation drawer
         LayoutInflater inflater = LayoutInflater.from(this);
         inflater.inflate(R.layout.activity_main, null);

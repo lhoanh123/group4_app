@@ -12,13 +12,16 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.group4_app.databinding.ActivitySignupBinding;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
 public class SignupActivity extends AppCompatActivity {
 
     // Biến binding để truy cập các thành phần trong layout
     private ActivitySignupBinding binding;
 
     // Biến connector để thao tác với cơ sở dữ liệu SQLite
-    private SQLiteConnector sqLiteConnector;
+    private MySQLConnector mySQLConnector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,50 +34,47 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Tạo connector để thao tác với cơ sở dữ liệu SQLite
-        sqLiteConnector = new SQLiteConnector(this);
+        mySQLConnector = new MySQLConnector();
 
         // Đặt sự kiện click cho nút đăng ký
         binding.signupButton.setOnClickListener(v -> {
-            // Lấy giá trị của các trường nhập liệu
             String username = binding.signupUser.getText().toString();
             String email = binding.signupEmail.getText().toString();
             String password = binding.signupPassword.getText().toString();
             String confirmPassword = binding.signupConfirm.getText().toString();
 
-            // Kiểm tra xem tất cả các trường nhập liệu có được điền đầy đủ không
             if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                // Nếu có trường nào đó chưa được điền, hiển thị thông báo lỗi
                 Toast.makeText(SignupActivity.this, "All fields are mandatory", Toast.LENGTH_SHORT).show();
             } else {
-                // Kiểm tra xem mật khẩu và xác nhận mật khẩu có trùng nhau không
                 if (password.equals(confirmPassword)) {
-                    // Kiểm tra xem email đã được đăng ký chưa
-                    if (!sqLiteConnector.checkUser(email)) {
-                        // Tạo đối tượng User mới
-                        User user = new User();
-                        user.setName(username);
-                        user.setEmail(email);
-                        user.setPassword(password);
+                    try {
+                        Future<Boolean> futureCheck = mySQLConnector.checkUserSignUp(email);
+                        boolean userExists = futureCheck.get();
 
-                        // Thêm user vào cơ sở dữ liệu
-                        sqLiteConnector.addUser(user);
+                        if (!userExists) {
+                            User user = new User();
+                            user.setName(username);
+                            user.setEmail(email);
+                            user.setPassword(password);
 
-                        // Hiển thị thông báo thành công
-                        Toast.makeText(SignupActivity.this, "Signup Successfully", Toast.LENGTH_SHORT).show();
+                            mySQLConnector.addUser(user);
 
-                        // Chuyển sang màn hình đăng nhập
-                        Intent intent = new Intent(SignupActivity.this, SigninActivity.class);
-                        startActivity(intent);
-                    } else {
-                        // Hiển thị thông báo lỗi nếu email đã được đăng ký
-                        Toast.makeText(SignupActivity.this, "User already exists. Please sign in", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignupActivity.this, "Signup Successfully", Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(SignupActivity.this, SigninActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(SignupActivity.this, "User already exists. Please sign in", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
                     }
                 } else {
-                    // Hiển thị thông báo lỗi nếu mật khẩu và xác nhận mật khẩu không trùng nhau
                     Toast.makeText(SignupActivity.this, "Invalid password", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
 
         // Đặt sự kiện click cho nút chuyển sang màn hình đăng nhập
         binding.SignInRedirectText.setOnClickListener(v -> {

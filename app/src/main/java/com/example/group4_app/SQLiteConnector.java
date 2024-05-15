@@ -163,7 +163,7 @@ public class SQLiteConnector extends SQLiteOpenHelper {
      * @param email
      * @return true/false
      */
-    public boolean checkUser(String email) {
+    public boolean checkUserSignUp(String email) {
 
         // array of columns to fetch
         String[] columns = {
@@ -208,7 +208,7 @@ public class SQLiteConnector extends SQLiteOpenHelper {
      * @param password
      * @return true/false
      */
-    public boolean checkUser(String username, String password) {
+    public boolean checkUserSignIn(String username, String password) {
 
         // array of columns to fetch
         String[] columns = {

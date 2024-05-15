@@ -12,6 +12,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.group4_app.databinding.ActivitySigninBinding;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
 // Lớp hoạt động đăng nhập
 public class SigninActivity extends AppCompatActivity {
 
@@ -19,7 +22,7 @@ public class SigninActivity extends AppCompatActivity {
     private ActivitySigninBinding binding;
 
     // Biến connector để kết nối với cơ sở dữ liệu SQLite
-    private SQLiteConnector sqLiteConnector;
+    private MySQLConnector mySQLConnector;
 
     // Phương thức onCreate được gọi khi hoạt động được tạo
     @Override
@@ -33,36 +36,37 @@ public class SigninActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Tạo đối tượng connector để kết nối với cơ sở dữ liệu SQLite
-        sqLiteConnector = new SQLiteConnector(this);
+        mySQLConnector = new MySQLConnector();
 
         // Đặt sự kiện click cho nút đăng nhập
         binding.signinButton.setOnClickListener(view -> {
-            // Lấy giá trị của trường tên đăng nhập và mật khẩu
             String username = binding.signinUser.getText().toString();
             String password = binding.signinPassword.getText().toString();
 
-            // Kiểm tra xem cả hai trường đều có giá trị hay không
             if (username.isEmpty() || password.isEmpty()) {
-                // Hiển thị thông báo lỗi nếu có trường nào đó trống
                 Toast.makeText(this, "All fields are mandatory", Toast.LENGTH_SHORT).show();
             } else {
-                // Kiểm tra thông tin đăng nhập với cơ sở dữ liệu
-                boolean checkCredentials = sqLiteConnector.checkUser(username, password);
+                // Execute the network operation in a separate thread
+                new Thread(() -> {
+                    try {
+                        Future<Boolean> futureCheck = mySQLConnector.checkUserSignIn(username, password);
+                        boolean checkCredentials = futureCheck.get(); // Wait and get the result
 
-                // Nếu thông tin đăng nhập hợp lệ
-                if (checkCredentials) {
-                    // Hiển thị thông báo thành công
-                    Toast.makeText(this, "Sign in successfully", Toast.LENGTH_SHORT).show();
-                    // Tạo intent để chuyển đến MainActivity
-                    Intent intent = new Intent(this, MainActivity.class);
-                    // Đưa tên đăng nhập vào intent
-                    intent.putExtra("UserName", username);
-                    // Khởi động hoạt động chính
-                    startActivity(intent);
-                } else {
-                    // Hiển thị thông báo lỗi nếu thông tin đăng nhập không hợp lệ
-                    Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
-                }
+                        runOnUiThread(() -> {
+                            if (checkCredentials) {
+                                Toast.makeText(this, "Sign in successfully", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(this, MainActivity.class);
+                                intent.putExtra("UserName", username);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                        runOnUiThread(() -> Toast.makeText(this, "An error occurred", Toast.LENGTH_SHORT).show());
+                    }
+                }).start();
             }
         });
 
